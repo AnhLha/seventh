@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../../assets/css/home/home.css';
 import { TR_TYPE_TIME, TR_TYPE_SETUP } from "../../constants/home/home.constant";
-import { GET_LENGHT_LIST, GET_NUMBER_INFORMATION, SEND_NUMBER_TOSERVER, START_CRAWL_DATA } from "../../action/home/home.action";
+import { GET_LENGHT_LIST, START_CRAWL_DATA } from "../../action/home/home.action";
 import { readFileExcel, createFileExcel } from "../../service/excel/excel.client.service";
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,18 +15,6 @@ export default function Home() {
     let phoneNumberChecking = useSelector(state => state.home.phoneNumberChecking);
     let sumIndex = useSelector(state => state.home.sumIndex);
     let isCrawlDone = useSelector(state => state.home.isCrawlDone);
-
-    // let listPhone = useSelector(state => state.home.listPhone);
-
-    // thay doi % hoan thien crawl 
-    // useEffect(() => {
-    //     console.log("current list phone", listPhone);
-    //     if (listPhone.length === 0) {
-    //         dispatch({ type: GET_LIST_PHONE, data: null });
-    //     }
-    //     // khoi tao interval - duy nhat 1 lan
-    //     dispatch({ type: SET_INTERVAL_PHONE });
-    // }, []);
 
     useEffect(() => {
         setIsTracking(!isCrawlDone);
@@ -65,10 +53,6 @@ export default function Home() {
 
     let onInputTime = (e) => {
         setMTime(e.target.value);
-    }
-
-    let downloadFile = (e) => {
-        createFileExcel(sampleData);
     }
 
     let setUpTime = () => {
@@ -143,7 +127,7 @@ export default function Home() {
                                 <text>Đang tra cứu tệp <span style={{ color: "green" }}>{nameFile}</span></text>
                             </div>
                             <div className="tracking-index-number-upper">
-                                <text style={{textAlign:"center"}}>Đang tra cứu tới số thứ {phoneNumberChecking.index}</text>
+                                <text style={{ textAlign: "center" }}>Đang tra cứu tới số thứ {phoneNumberChecking.index}</text>
                             </div>
                             <div className="tracking-index-number-bellow">
                                 <text>Hoàn thành {percentProcess(phoneNumberChecking.index, sumIndex)}%</text>

@@ -1,4 +1,3 @@
-import { OTP_URL, HOME_URL } from "../../constants/work/work.constants";
 import { SOCKET_SOMETHING_ERROR, SOCKET_OTP_STATUS, SOCKET_OTP_INCORRECT } from "../../../common/constants/common.constants";
 
 const DEFAULT_DELAY = 2000;
@@ -18,17 +17,11 @@ async function doOTPChecking(otp, socket, driver) {
         console.log("otp ", otp);
 
         //khi mà dilaog sai otp hiện lên
-        driver.on("dialog",async (dialog) => {
+        driver.on("dialog", async (dialog) => {
             console.log(dialog.message());
             await dialog.dismiss();
             socket.send(SOCKET_OTP_STATUS, { data: 4 });
         });
-
-        // go to login url
-         //await driver.goto(OTP_URL);
-
-        //wait to complete
-        // await driver.waitForFunction('document.readyState === "complete"');
 
         //lấy ra một DOM - tương đương hàm document.querySelector()
         let dataFromLoginSummarySpan = await driver.$$eval("#content > div.otp-form", spanData => spanData.map((span) => {
@@ -45,9 +38,6 @@ async function doOTPChecking(otp, socket, driver) {
             await Promise.all([driver.click(selector), driver.waitForNavigation({ waitUntil: 'load', timeout: 0 })]);
 
             await timer(2000);
-
-            //đi tới trang thông tin số
-            // await driver.goto(HOME_URL);
 
             // wait to complete
             await driver.waitForFunction('document.querySelector("#txtSearch") != null');

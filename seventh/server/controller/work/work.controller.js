@@ -1,5 +1,4 @@
 import socketServer from "../../service/socket/socket.server.service";
-// import csvService from "../../service/csv/csv.server.service";
 import {
     SOCKET_LOGIN,
     SOCKET_OTP,
@@ -9,7 +8,6 @@ import {
 import doLogin from "../work/login.controller";
 import doOTPChecking from "../work/otp.controller";
 import doGetInfomation from "../work/home.controller";
-import { forEach } from "lodash";
 
 const puppeteer = require('puppeteer');
 //C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe
@@ -36,10 +34,6 @@ const preparePuppteer = function () {
                 ignoreHTTPSErrors: true,
                 executablePath: exPath == "" ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe" : exPath
             })
-
-            // let pageLogin = await browser.newPage();
-            // pageLogin.setViewport({ width: 2600, height: 3800 });
-
             res(browser);
         } catch (e) {
             rej(e);
@@ -50,7 +44,7 @@ const preparePuppteer = function () {
 const workingController = async function (server) {
     try {
         browser = await preparePuppteer();
-        driver  = await browser.newPage();
+        driver = await browser.newPage();
         driver.setViewport({ width: 2600, height: 3800 });
 
         //khoi tao socket 
@@ -176,7 +170,7 @@ const createFileExcel = function (data) {
 
         writeHeader(wb, ws);
         let today = new Date();
-        fileName = data + "_" + "Ngay " +  today.getDate() +" Thang " + (today.getMonth() + 1) + " Nam " + today.getFullYear()  + "_" + today.getHours() + " Gio " + today.getMinutes() + " Phut.xlsx";
+        fileName = data + "_" + "Ngay " + today.getDate() + " Thang " + (today.getMonth() + 1) + " Nam " + today.getFullYear() + "_" + today.getHours() + " Gio " + today.getMinutes() + " Phut.xlsx";
         wb.write(fileName);
 
     } catch (e) {

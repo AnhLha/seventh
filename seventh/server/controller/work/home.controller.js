@@ -1,5 +1,5 @@
 import { HOME_URL } from "../../constants/work/work.constants";
-import { SOCKET_WORKING_CRAWLED_ITEM_DATA, SOCKET_CRAWLED_DONE } from "../../../common/constants/common.constants";
+import { SOCKET_WORKING_CRAWLED_ITEM_DATA } from "../../../common/constants/common.constants";
 import { getListTdInformation, getTdInformation } from "../../service/util/utils.server";
 const DEFAULT_DELAY = 2000;
 
@@ -36,7 +36,7 @@ async function doGetInfomation(line, numberPhone, index, month, worksheet, socke
 
         // select to button search & click button
         selector = "#Div_Param > div:nth-child(2) > div:nth-child(3) > button"; // need to update
-        await Promise.all([driver.click(selector)]);//, driver.waitForNavigation({ waitUntil: 'load', timeout: 0 })]);
+        await Promise.all([driver.click(selector)]);
 
         await timer(2000);
 
@@ -50,7 +50,7 @@ async function doGetInfomation(line, numberPhone, index, month, worksheet, socke
         if (JSON.stringify(resultHtml) == JSON.stringify([""])) { //  table k co du lieu >> k them vao excel
             // bo qua,k them du lieu vao excel
             socket.send(SOCKET_WORKING_CRAWLED_ITEM_DATA, { index: index + 1, phone: numberPhone });
-            
+
         } else {
             //let listTdTag = getListTdInformation(resultHtml);
             let listTdTag = getListTdInformation(resultHtml[0]);
@@ -73,10 +73,6 @@ async function doGetInfomation(line, numberPhone, index, month, worksheet, socke
             // clearInterval(itemPhone.interval);
             line++;
         }
-        //đưa đoạn gửi tín hiệu thành công ra khỏi if else
-        // if (index == length) {
-        //     socket.send(SOCKET_CRAWLED_DONE, { data: 2 });
-        // }
         return line;
     } catch (e) {
         console.log("doGetInfomation error ", e);

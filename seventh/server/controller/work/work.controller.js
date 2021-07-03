@@ -90,8 +90,10 @@ const doOTP = function (data) {
 const doGetInfor = async function (data) { // crawl data in table
     try {
         console.log("data from client: ", data);
-        let mTime = data.time ? (data.time * 1000) : MIN_TIME;
-        createFileExcel(data.nameFile);
+        // let mTime = data.time ? (data.time * 1000) : MIN_TIME;
+        let mTime = MIN_TIME;
+        let mStartDate = data.startDate;
+        createFileExcel(data.nameFile, mStartDate);
         let style = wb.createStyle({
             alignment: {
                 vertical: ['center'],
@@ -107,7 +109,7 @@ const doGetInfor = async function (data) { // crawl data in table
         for (let index = 0; index < data.listPhone.length; index++) {
             console.log("Tra cuu so thu ", index, " phone ", data.listPhone[index]);
             let today = new Date();
-            let tempLine = await doGetInfomation(line, data.listPhone[index].phone, data.listPhone[index].index, today.getFullYear() + '-' + (today.getMonth() + 1), ws, socket, driver, data.listPhone.length, style);
+            let tempLine = await doGetInfomation(line, data.listPhone[index].phone, data.listPhone[index].index, mStartDate.getFullYear() + '-' + (mStartDate.getMonth() + 1), ws, socket, driver, data.listPhone.length, style);
             line = tempLine;
             await timer(mTime);
             //cứ 50 só một lần, ghi lại vào file excel
@@ -155,7 +157,7 @@ async function writeHeader(wb, ws) {
     }
 }
 
-const createFileExcel = function (data) {
+const createFileExcel = function (data, startDate) {
     try {
         console.log(" file name from client", data);
 
@@ -169,8 +171,8 @@ const createFileExcel = function (data) {
         ws.column(5).setWidth(30);//TOTAL_TKC
 
         writeHeader(wb, ws);
-        let today = new Date();
-        fileName = data + "_" + "Ngay " + today.getDate() + " Thang " + (today.getMonth() + 1) + " Nam " + today.getFullYear() + "_" + today.getHours() + " Gio " + today.getMinutes() + " Phut.xlsx";
+        // let today = new Date();
+        fileName = data + "_" + "Thang " + (startDate.getMonth() + 1) + " Nam " + startDate.getFullYear() + ".xlsx";
         wb.write(fileName);
 
     } catch (e) {

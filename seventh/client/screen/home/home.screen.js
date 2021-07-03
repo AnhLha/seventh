@@ -46,7 +46,9 @@ export default function Home() {
                 }
                 if (index == (data.length - 1)) {
                     console.log("data - endoflist", item[0], " ", item[1], " listPhone", listPhone);
-                    dispatch({ type: START_CRAWL_DATA, data: { listPhone: listPhone, nameFile: nameFile.substring(0, nameFile.length - 5), time: mTime } });
+                    // dispatch({ type: START_CRAWL_DATA, data: { listPhone: listPhone, nameFile: nameFile.substring(0, nameFile.length - 5), time: mTime } });
+                    // update here: dispatch startDate
+                    dispatch({ type: START_CRAWL_DATA, data: { listPhone: listPhone, nameFile: nameFile.substring(0, nameFile.length - 5), startDate: startDate } });
                     setOnBoarding(true);
                 }
             });

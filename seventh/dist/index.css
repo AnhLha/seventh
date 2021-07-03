@@ -70,6 +70,9 @@ td{
 .input-add-div{
     width: 50%!important;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     flex-wrap: nowrap;
     margin: 10px 0px 0px 0px;
 }
@@ -78,7 +81,7 @@ td{
     width: 75%!important;
     height: 45px!important;
     margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .input-add-button{

@@ -4,12 +4,17 @@ import { TR_TYPE_TIME, TR_TYPE_SETUP } from "../../constants/home/home.constant"
 import { GET_LENGHT_LIST, START_CRAWL_DATA } from "../../action/home/home.action";
 import { readFileExcel, createFileExcel } from "../../service/excel/excel.client.service";
 import { useSelector, useDispatch } from 'react-redux';
+import DatePicker, {registerLocale} from "react-datepicker";
+import "../../../node_modules/react-datepicker/dist/react-datepicker";
+import vi from 'date-fns/locale/vi';
+registerLocale('vi',vi);
 
 export default function Home() {
-    const [mTime, setMTime] = useState(0);
+    const [mTime, setMTime] = useState(1);
     const [isTracking, setIsTracking] = useState(false);
     const [nameFile, setNameFile] = useState("");
     const [onBoarding, setOnBoarding] = useState(false);
+    const [startDate, setStartDate] = useState(new Date);
     const dispatch = useDispatch();
     let listPhone = useSelector(state => state.home.listPhone);
     let phoneNumberChecking = useSelector(state => state.home.phoneNumberChecking);
@@ -56,13 +61,19 @@ export default function Home() {
     }
 
     let setUpTime = () => {
-        dispatch({ type: ADD_PHONE, data: { mTime: mTime } });
+        // dispatch({ type: ADD_PHONE, data: { mTime: mTime } });
+        dispatch({ type: ADD_PHONE, data: { startDate: startDate } });
     }
 
     let percentProcess = (index, sum) => {
         console.log("sum ", sum);
         return ((index / sum) * 100).toFixed(2);
     }
+
+    let selectTime = (data) => {
+        setStartDate(data);
+    }
+
     return (
         <div className="crawl-login" id="div_craw">
             <div style={{
@@ -70,13 +81,20 @@ export default function Home() {
                 top: "20px",
                 fontSize: "36px",
                 fontWeight: "600"
-            }}>CAS VNPT TRA CỨU THÔNG TIN</div>
+            }}>BÁO CÁO TIÊU DÙNG - NẠP THẺ</div>
             {
                 !isTracking ?
                     <div>
-                        <div className="crawl-login">
-                            <div className="input-add-div">
-                                <input className="input-add" type="number" min="1" max="60" defaultValue="1" placeholder={TR_TYPE_TIME} onChange={onInputTime} />
+                        <div className="crawl-login">                          
+                            <div className="input-add-div"> 
+                                <DatePicker 
+                                    className="input-add"
+                                    showMonthYearPicker
+                                    dateFormat="MM/yyyy"
+                                    locale = "vi"
+                                    selected = {startDate}
+                                    onChange = {selectTime}/>
+                                {/* <input className="input-add" type="number" min="1" max="60" defaultValue="1" placeholder={TR_TYPE_TIME} onChange={onInputTime} /> */}
                                 <input className="input-add-button" type="button" value={TR_TYPE_SETUP} onClick={setUpTime} />
                             </div>
                             <div id="crawl_login_file_input_up">

@@ -4,10 +4,11 @@ import { TR_TYPE_TIME, TR_TYPE_SETUP } from "../../constants/home/home.constant"
 import { GET_LENGHT_LIST, START_CRAWL_DATA } from "../../action/home/home.action";
 import { readFileExcel, createFileExcel } from "../../service/excel/excel.client.service";
 import { useSelector, useDispatch } from 'react-redux';
-import DatePicker, {registerLocale} from "react-datepicker";
-import "../../../node_modules/react-datepicker/dist/react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
+///import "../../../node_modules/react-datepicker/dist/react-datepicker";
+import '../../assets/css/react-datepicker.css';
 import vi from 'date-fns/locale/vi';
-registerLocale('vi',vi);
+registerLocale('vi', vi);
 
 export default function Home() {
     const [mTime, setMTime] = useState(1);
@@ -48,7 +49,7 @@ export default function Home() {
                     console.log("data - endoflist", item[0], " ", item[1], " listPhone", listPhone);
                     // dispatch({ type: START_CRAWL_DATA, data: { listPhone: listPhone, nameFile: nameFile.substring(0, nameFile.length - 5), time: mTime } });
                     // update here: dispatch startDate
-                    dispatch({ type: START_CRAWL_DATA, data: { listPhone: listPhone, nameFile: nameFile.substring(0, nameFile.length - 5), startDate: startDate } });
+                    dispatch({ type: START_CRAWL_DATA, data: { listPhone: listPhone, nameFile: nameFile.substring(0, nameFile.length - 5), startDate: (startDate.getFullYear() + '+' + (startDate.getMonth() + 1)) } });
                     setOnBoarding(true);
                 }
             });
@@ -64,7 +65,7 @@ export default function Home() {
 
     let setUpTime = () => {
         // dispatch({ type: ADD_PHONE, data: { mTime: mTime } });
-        dispatch({ type: ADD_PHONE, data: { startDate: startDate } });
+        dispatch({ type: ADD_PHONE, data: { startDate: (startDate.getFullYear() + '+' + (startDate.getMonth() + 1)) } });
     }
 
     let percentProcess = (index, sum) => {
@@ -87,17 +88,18 @@ export default function Home() {
             {
                 !isTracking ?
                     <div>
-                        <div className="crawl-login">                          
-                            <div className="input-add-div"> 
-                                <DatePicker 
+                        <div className="crawl-login">
+                            <div className="input-add-div">
+                                <div className="title-input">Thời gian</div>
+                                <DatePicker
                                     className="input-add"
                                     showMonthYearPicker
                                     dateFormat="MM/yyyy"
-                                    locale = "vi"
-                                    selected = {startDate}
-                                    onChange = {selectTime}/>
+                                    locale="vi"
+                                    selected={startDate}
+                                    onChange={selectTime} />
                                 {/* <input className="input-add" type="number" min="1" max="60" defaultValue="1" placeholder={TR_TYPE_TIME} onChange={onInputTime} /> */}
-                                <input className="input-add-button" type="button" value={TR_TYPE_SETUP} onClick={setUpTime} />
+                                {/* <input className="input-add-button" type="button" value={TR_TYPE_SETUP} onClick={setUpTime} /> */}
                             </div>
                             <div id="crawl_login_file_input_up">
                                 {/* <img id="img_file_input" src='../assets/images/file.png' /> */}
@@ -117,7 +119,7 @@ export default function Home() {
                                     width: "100%",
                                     transform: 'translate(-50%, 10px)',
                                 }} className="tracking-index-number-upper">
-                                    <text>Tra cứu thành công , tên tệp đã crawl là <span style={{ color: "green" }}>{nameFile}</span></text>
+                                    <text>Tra cứu thành công , tên tệp đã tra cứu là <span style={{ color: "green" }}>{nameFile}</span></text>
                                 </div>
                                 :
                                 null

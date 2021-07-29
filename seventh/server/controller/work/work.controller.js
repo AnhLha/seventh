@@ -109,7 +109,7 @@ const doGetInfor = async function (data) { // crawl data in table
         for (let index = 0; index < data.listPhone.length; index++) {
             console.log("Tra cuu so thu ", index, " phone ", data.listPhone[index]);
             let today = new Date();
-            let tempLine = await doGetInfomation(line, data.listPhone[index].phone, data.listPhone[index].index, mStartDate.getFullYear() + '-' + (mStartDate.getMonth() + 1), ws, socket, driver, data.listPhone.length, style);
+            let tempLine = await doGetInfomation(line, data.listPhone[index].phone, data.listPhone[index].index, mStartDate, ws, socket, driver, data.listPhone.length, style);
             line = tempLine;
             await timer(mTime);
             //cứ 50 só một lần, ghi lại vào file excel
@@ -171,8 +171,8 @@ const createFileExcel = function (data, startDate) {
         ws.column(5).setWidth(30);//TOTAL_TKC
 
         writeHeader(wb, ws);
-        // let today = new Date();
-        fileName = data + "_" + "Thang " + (startDate.getMonth() + 1) + " Nam " + startDate.getFullYear() + ".xlsx";
+        let today = new Date();
+        fileName = data + "-" + "Năm " + startDate + "-Lúc " + today.getHours() + " giờ " + today.getMinutes() + " phút-Ngày " + today.getDate() + " tháng " + (today.getMonth() + 1) + " năm " + today.getFullYear() + ".xlsx";
         wb.write(fileName);
 
     } catch (e) {

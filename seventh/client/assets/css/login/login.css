@@ -33,7 +33,7 @@ input :hover{
 }
 
 .crawl-login span {
-    color: #318a1ae3;
+    color: #212121;
 }
 
 .crawl-login-username-password-below {
@@ -49,7 +49,7 @@ input :hover{
     width: 100%;
     height: 45px;
     border-radius: 4px;
-    border: 1px solid #ba68c8;
+    border: 1px solid #212121;
     padding-left: 10px;
     -webkit-box-sizing: border-box;
     /* Safari/Chrome, other WebKit */
@@ -60,7 +60,8 @@ input :hover{
 }
 
 .crawl-login ::placeholder {
-    color: rgb(107, 133, 113);
+    color: #bdbdbd;
+    font-style: italic;
 }
 
 .crawl-login-button-submit {
@@ -71,7 +72,8 @@ input :hover{
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    background: #ba68c8;
+    background: #0091ea;
+    font-size: 25px;
 }
 
 .crawl-login-button-submit span {

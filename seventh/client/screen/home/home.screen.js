@@ -21,7 +21,7 @@ export default function Home() {
     let phoneNumberChecking = useSelector(state => state.home.phoneNumberChecking);
     let sumIndex = useSelector(state => state.home.sumIndex);
     let isCrawlDone = useSelector(state => state.home.isCrawlDone);
-
+    
     useEffect(() => {
         setIsTracking(!isCrawlDone);
     }, [isCrawlDone]);
